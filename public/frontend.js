@@ -13,3 +13,6 @@ socket.emit("get-free-tickets-quantity");
 socket.on("put-free-tickets-quantity", quantity => {
     tickets.innerHTML = quantity;
 });
+socket.on("alert", data => {
+    alert(data.message);
+});
