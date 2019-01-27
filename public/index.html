@@ -1,17 +1,31 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Frost Chat: WebSockets</title>
-    <link rel="stylesheet" href="/styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Booking PoC</title>
+    <link rel="stylesheet" href="/bootstrap.min.css" />
+    <script src="/socket.io.js"></script>
 </head>
+
 <body>
-Free Tickets: <div id="tickets"></div>
-<input type="text" id="handle" placeholder="Who am I">
-<button id="reserve">Reserve</button>
-<script src="/frontend.js"></script>
+    <div class="container">
+        <h1>Free Tickets: <span id="tickets"></span></h1>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="handle" placeholder="Who am I?" required>
+                </div>
+                <div class="col-sm-2">
+                    <button id="reserve" type="button" class="btn btn-primary">Reserve</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="/frontend.js"></script>
 </body>
+
 </html>

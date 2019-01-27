@@ -8,14 +8,16 @@ app.use(express.static("public"));
 
 const io = socket(server);
 
-let quantity = 100;
+let quantity = 10;
 
 io.on("connection", socket => {
     socket.on("get-free-tickets-quantity", () => {
         io.sockets.emit("put-free-tickets-quantity", quantity);
     });
-    socket.on("reserve-action", () =>{
-        quantity--;
-        io.sockets.emit("put-free-tickets-quantity", quantity);
+    socket.on("reserve-action", data => {
+        if (data.handle) {
+            quantity--;
+            io.sockets.emit("put-free-tickets-quantity", quantity);
+        }
     });
 });

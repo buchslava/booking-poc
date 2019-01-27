@@ -4,11 +4,12 @@ const handle = document.querySelector("#handle");
 const reserve = document.querySelector("#reserve");
 
 reserve.addEventListener("click", () => {
-    socket.emit("reserve-action", {handle: handle.value});
+    socket.emit("reserve-action", { handle: handle.value });
+    handle.value = "";
 });
 
 socket.emit("get-free-tickets-quantity");
 
 socket.on("put-free-tickets-quantity", quantity => {
-    tickets.innerHTML = `<strong>${quantity}</strong>`;
+    tickets.innerHTML = quantity;
 });
