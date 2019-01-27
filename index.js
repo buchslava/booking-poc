@@ -32,4 +32,8 @@ io.on("connection", socket => {
             }
         }
     });
+    socket.on("add-quantity", quantityToAdd => {
+        quantity += Number(quantityToAdd);
+        io.sockets.emit("put-free-tickets-quantity", quantity);
+    });
 });
