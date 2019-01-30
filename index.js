@@ -9,16 +9,19 @@ app.use(express.static("public"));
 const io = socket(server);
 
 const whoBoughtAticket = new Set();
-let quantity = 3;
+let users = 0;
+let quantity = 7;
 
 io.on("connection", socket => {
+    io.sockets.emit("put-users-quantity", ++users);
+
     socket.on("get-free-tickets-quantity", () => {
         io.sockets.emit("put-free-tickets-quantity", quantity);
     });
     socket.on("reserve-action", data => {
         if (data.handle) {
             if (whoBoughtAticket.has(data.handle)) {
-                io.sockets.emit("alert", { message: "You already bougth a ticket!" });
+                socket.emit("alert", { message: "You already bougth a ticket!" });
                 return;
             }
 
@@ -27,7 +30,7 @@ io.on("connection", socket => {
                 whoBoughtAticket.add(data.handle);
                 io.sockets.emit("put-free-tickets-quantity", quantity);
             } else {
-                io.sockets.emit("alert", { message: "Free tickers are missing!" });
+                socket.emit("alert", { message: "Free tickers are missing!" });
                 return;
             }
         }
@@ -35,5 +38,8 @@ io.on("connection", socket => {
     socket.on("add-quantity", quantityToAdd => {
         quantity += Number(quantityToAdd);
         io.sockets.emit("put-free-tickets-quantity", quantity);
+    });
+    socket.on("disconnect", () => {
+        io.sockets.emit("put-users-quantity", --users);
     });
 });
