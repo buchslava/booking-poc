@@ -7,5 +7,9 @@ socket.on("connect", socket => {
 });
 
 stdin.addListener("data", newData => {
+    if (newData.toString().trim() === '!') {
+        socket.emit("total", {});
+        return;
+    }
     socket.emit("add-quantity", newData.toString().trim());
 });

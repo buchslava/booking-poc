@@ -39,6 +39,9 @@ io.on("connection", socket => {
         quantity += Number(quantityToAdd);
         io.sockets.emit("put-free-tickets-quantity", quantity);
     });
+    socket.on("total", () => {
+        console.log([...whoBoughtAticket].join(' '));
+    });
     socket.on("disconnect", () => {
         io.sockets.emit("put-users-quantity", --users);
     });
