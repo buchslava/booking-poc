@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Booking PoC</title>
     <link rel="stylesheet" href="/bootstrap.min.css" />
     <script src="/socket.io.js"></script>
@@ -26,7 +26,30 @@
             </div>
         </form>
     </div>
-    <script src="/frontend.js"></script>
 </body>
+<script>
+    const socket = io.connect("http://<%= ip %>:9090");
+    const tickets = document.querySelector("#tickets");
+    const users = document.querySelector("#users");
+    const handle = document.querySelector("#handle");
+    const reserve = document.querySelector("#reserve");
+
+    reserve.addEventListener("click", () => {
+        socket.emit("reserve-action", { handle: handle.value });
+        handle.value = "";
+    });
+
+    socket.emit("get-free-tickets-quantity");
+
+    socket.on("put-free-tickets-quantity", quantity => {
+        tickets.innerHTML = quantity;
+    });
+    socket.on("put-users-quantity", usersOnline => {
+        users.innerHTML = usersOnline;
+    });
+    socket.on("alert", data => {
+        alert(data.message);
+    });
+</script>
 
 </html>

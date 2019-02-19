@@ -1,10 +1,17 @@
 const socket = require("socket.io");
 const express = require("express");
+const ip = require("ip");
 const app = express();
 const server = app.listen(9090, () => {
     console.log("Listening on port 9090");
 });
 app.use(express.static("public"));
+
+app.set('view engine', 'ejs');
+
+app.get('/', function(req, res) {
+    res.render('pages/index', {ip: ip.address()});
+});
 
 const io = socket(server);
 
